@@ -5,6 +5,10 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
+//set background color. First arg is the color, second arg is the opacity
+renderer.setClearColor( 0xb7c3f3, 1);
+
+//add light
 const light = new THREE.AmbientLight( 0xffffff ); // soft white light
 scene.add( light );
 
@@ -15,18 +19,53 @@ scene.add( light );
 
 camera.position.z = 5;
 
+
+//load model and scene
 const loader = new THREE.GLTFLoader();
-loader.load("../models/scene.gltf", function(gltf){
-    scene.add(gltf.scene);
 
-})
+class Doll{
+    constructor(){
+        loader.load("../models/scene.gltf", (gltf) =>{ //arrow function because we want "this" to point to this class 
+            scene.add(gltf.scene);
+            gltf.scene.scale.set(0.4, 0.4, 0.4);
+            gltf.scene.position.set(0, -1, 0);
+            this.doll = gltf.scene;
+        })
+    }
 
+    lookBackward(){
+        this.doll.rotation.y = -3.15;
+    }
+
+    lookForward(){
+        this.doll.rotation.y = 0;
+    }
+
+}
+
+//make new doll object
+let doll = new Doll();
+
+//set a timeout of 1 second so scene has time to load
+setTimeout(() => {
+    doll.lookBackward()
+}, 1000);
+
+
+//update model automatically over time, creating an animation
 function animate() {
 	requestAnimationFrame( animate );
-
-    //cube.rotation.z += 0.01;
-
-
 	renderer.render( scene, camera );
 }
 animate();
+
+
+//resize the screen whenever window size changes
+window.addEventListener( 'resize', onWindowResize, false);
+
+function onWindowResize(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+}
