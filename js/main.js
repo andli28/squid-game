@@ -56,12 +56,41 @@ class Doll{
 
 }
 
+//create the track with 3 cubes
 function createTrack(){
     createCube({w: start_position * 2 + .2, h: 1.5, d: 1}, 0, 0, 0xe5a716).position.z = -1;
     createCube({w: .2, h: 1.5, d: 1}, start_position, -.35);
     createCube({w: .2, h: 1.5, d: 1}, end_position, .35);
 }
 createTrack()
+
+//create the player
+class Player{
+    constructor(){
+        const geometry = new THREE.SphereGeometry( .3, 32, 16 );
+        const material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+        const sphere = new THREE.Mesh( geometry, material );
+        sphere.position.z = 1
+        sphere.position.x = start_position
+        scene.add( sphere );
+        this.player = sphere
+        this.playerInfo = {
+            positionX: start_position,
+            velocity: 0.1,
+        }
+    }
+
+    run(){
+        this.playerInfo.velocity = .03
+    }
+
+    update(){
+        this.playerInfo.positionX -= this.playerInfo.velocity
+        this.player.position.x = this.playerInfo.positionX
+    }
+}
+
+const player = new Player()
 
 //make new doll object
 let doll = new Doll();
@@ -76,6 +105,7 @@ setTimeout(() => {
 function animate() {
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
+    player.update()
 }
 animate();
 
