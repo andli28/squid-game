@@ -34,6 +34,10 @@ camera.position.z = 5;
 //load model and scene
 const loader = new THREE.GLTFLoader();
 
+function delay(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 class Doll{
     constructor(){
         loader.load("../models/scene.gltf", (gltf) =>{ //arrow function because we want "this" to point to this class 
@@ -52,6 +56,15 @@ class Doll{
     lookForward(){
         //this.doll.rotation.y = 0;
         gsap.to(this.doll.rotation, {y: 0, duration: .45})
+    }
+
+    //randomize doll turning
+    async start(){
+        this.lookBackward()
+        await delay(Math.random() * 1000 + 1000) //# between 1-2 seconds
+        this.lookForward()
+        await delay(Math.random() * 750 + 750) //# between .75-1.5 seconds
+        this.start()
     }
 
 }
@@ -104,7 +117,7 @@ let doll = new Doll();
 
 //set a timeout of 1 second so scene has time to load
 setTimeout(() => {
-    doll.lookBackward()
+    doll.start()
 }, 1000);
 
 
