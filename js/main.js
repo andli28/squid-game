@@ -76,12 +76,19 @@ class Player{
         this.player = sphere
         this.playerInfo = {
             positionX: start_position,
-            velocity: 0.1,
+            velocity: 0,
         }
     }
 
     run(){
         this.playerInfo.velocity = .03
+    }
+
+    stop(){
+        //this.playerInfo.velocity = 0
+
+        //deceleration instead of instantaneous stoppage
+        gsap.to(this.playerInfo, {velocity: 0, duration: .1})
     }
 
     update(){
@@ -119,3 +126,17 @@ function onWindowResize(){
     renderer.setSize(window.innerWidth, window.innerHeight);
 
 }
+
+//keypress handling
+window.addEventListener('keydown', (e) => {
+    if(e.key == "ArrowUp"){
+        player.run()
+    }
+
+})
+window.addEventListener('keyup', (e) => {
+    if(e.key == "ArrowUp"){
+        player.stop()
+    }
+
+})
