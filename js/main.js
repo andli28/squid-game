@@ -42,7 +42,7 @@ function delay(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let model = "kirby_model";
+let model = "gene_model";
 
 class Doll{
     constructor(){
@@ -59,6 +59,11 @@ class Doll{
             else if(model == "shark_boi_model"){
                 gltf.scene.scale.set(60, 60, 60);
                 gltf.scene.position.set(0, -0.8, 0);
+            }
+            else if(model == "gene_model"){
+                gltf.scene.scale.set(.2, .2, .2);
+                gltf.scene.position.set(0, -0.5, 0);
+                gltf.scene.rotation.set(1.57, 0, 0);
             }
             else{
                 gltf.scene.scale.set(1, 1, 1);
