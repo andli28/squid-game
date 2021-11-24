@@ -44,7 +44,7 @@ function delay(ms){
 
 class Doll{
     constructor(){
-        loader.load("models/scene.gltf", (gltf) =>{ //arrow function because we want "this" to point to this class 
+        loader.load("doll_model/scene.gltf", (gltf) =>{ //arrow function because we want "this" to point to this class 
             scene.add(gltf.scene);
             gltf.scene.scale.set(0.4, 0.4, 0.4);
             gltf.scene.position.set(0, -1, 0);
