@@ -1,0 +1,11 @@
+Model Information:
+* title:	Shark boi
+* source:	https://sketchfab.com/3d-models/shark-boi-dc70dab09c104e8ba2adaf089c6c1db2
+* author:	epilogueronin (https://sketchfab.com/epilogueronin)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Shark boi" (https://sketchfab.com/3d-models/shark-boi-dc70dab09c104e8ba2adaf089c6c1db2) by epilogueronin (https://sketchfab.com/epilogueronin) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
