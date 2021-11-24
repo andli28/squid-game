@@ -53,8 +53,8 @@ class Doll{
                 gltf.scene.position.set(0, -1, 0);
             }
             else if(model == "kirby_model"){
-                gltf.scene.scale.set(0.25, 0.25, 0.25);
-                gltf.scene.position.set(0, -2, 0);
+                gltf.scene.scale.set(0.2, 0.2, 0.2);
+                gltf.scene.position.set(0, -1.5, 0);
             }
             else if(model == "shark_boi_model"){
                 gltf.scene.scale.set(60, 60, 60);
