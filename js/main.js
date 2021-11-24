@@ -15,6 +15,10 @@ scene.add( light );
 // global variables
 const start_position = 3;
 const end_position = -start_position;
+const text = document.querySelector(".text");
+const TIME_LIMIT = 15
+let gameStat = "loading"
+let isLookingBackward = true
 
 //function for creating a cube (size, x position, y rotation)
 function createCube(size, positionX, rotY = 0, color = 0xfbc851){
@@ -51,11 +55,13 @@ class Doll{
     lookBackward(){
         //this.doll.rotation.y = -3.15;
         gsap.to(this.doll.rotation, {y: -3.15, duration: .45})
+        setTimeout(() => isLookingBackward = true, 150)
     }
 
     lookForward(){
         //this.doll.rotation.y = 0;
         gsap.to(this.doll.rotation, {y: 0, duration: .45})
+        setTimeout(() => isLookingBackward = false, 450)
     }
 
     //randomize doll turning
@@ -104,7 +110,23 @@ class Player{
         gsap.to(this.playerInfo, {velocity: 0, duration: .1})
     }
 
+    //check if velocity of player is not 0 when doll is looking forward, lose
+    check(){
+        if(this.playerInfo.velocity > 0 && !isLookingBackward){
+            //alert("You lose!")
+            text.innerText = "You lose!"
+            gameStat = "over"
+        }
+        if(this.playerInfo.positionX < end_position + .4){
+            //alert("You win!")
+            text.innerText = "You win!"
+            gameStat = "over"
+        }
+    }
+
+    //will be continously called
     update(){
+        this.check()
         this.playerInfo.positionX -= this.playerInfo.velocity
         this.player.position.x = this.playerInfo.positionX
     }
@@ -115,14 +137,39 @@ const player = new Player()
 //make new doll object
 let doll = new Doll();
 
-//set a timeout of 1 second so scene has time to load
-setTimeout(() => {
-    doll.start()
-}, 1000);
+async function init(){
+    await delay(500)
+    text.innerText = "Starting in 3"
+    await delay(500)
+    text.innerText = "Starting in 2"
+    await delay(500)
+    text.innerText = "Starting in 1"
+    await delay(500)
+    text.innerText = "Go!"
+    startGame()
+}
+
+function startGame(){
+    gameStat = "started"
+    let progressBar = createCube({w: 5, h: .1, d: 1}, 0)
+    progressBar.position.y = 3.35
+    gsap.to(progressBar.scale, {x: 0, duration: TIME_LIMIT, ease: "none"})
+    doll.start();
+    setTimeout(() => {
+        if(gameStat != "over"){
+            text.innerText = "You ran out of time."
+            gameStat = "over"
+        }
+    }, TIME_LIMIT * 1000)
+}
+
+init()
+
 
 
 //update model automatically over time, creating an animation
 function animate() {
+    if(gameStat == "over") return
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
     player.update()
@@ -142,6 +189,7 @@ function onWindowResize(){
 
 //keypress handling
 window.addEventListener('keydown', (e) => {
+    if(gameStat != "started") return
     if(e.key == "ArrowUp"){
         player.run()
     }
