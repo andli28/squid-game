@@ -206,13 +206,13 @@ function onWindowResize(){
 //keypress handling
 window.addEventListener('keydown', (e) => {
     if(gameStat != "started") return
-    if(e.key == "ArrowUp"){
+    if(e.key == "ArrowUp" || e.key == "ArrowLeft"){
         player.run()
     }
 
 })
 window.addEventListener('keyup', (e) => {
-    if(e.key == "ArrowUp"){
+    if(e.key == "ArrowUp" || e.key == "ArrowLeft"){
         player.stop()
     }
 
