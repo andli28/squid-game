@@ -42,12 +42,20 @@ function delay(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+let model = "kirby_model";
+
 class Doll{
     constructor(){
-        loader.load("doll_model/scene.gltf", (gltf) =>{ //arrow function because we want "this" to point to this class 
+        loader.load(model + "/scene.gltf", (gltf) =>{ //arrow function because we want "this" to point to this class 
             scene.add(gltf.scene);
-            gltf.scene.scale.set(0.4, 0.4, 0.4);
-            gltf.scene.position.set(0, -1, 0);
+            if(model == "doll_model"){
+                gltf.scene.scale.set(0.4, 0.4, 0.4);
+                gltf.scene.position.set(0, -1, 0);
+            }
+            else if(model == "kirby_model"){
+                gltf.scene.scale.set(0.2, 0.2, 0.2);
+                gltf.scene.position.set(0, -2, 0);
+            }            
             this.doll = gltf.scene;
         })
     }
