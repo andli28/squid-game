@@ -42,7 +42,7 @@ function delay(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let model = "gene_model";
+let model = "kirby_model";
 
 class Doll{
     constructor(){
